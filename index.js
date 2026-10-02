@@ -26,7 +26,8 @@ if (require.main === module) {
 
 
 
-let PORT = process.env.PORT
+if (require.main === module) {
+    let PORT = process.env.PORT
 
 app.listen(PORT, (err) =>{
     if (err) {
@@ -37,6 +38,8 @@ app.listen(PORT, (err) =>{
         
     }
 })
+}
+
 
 module.exports = async (req, res) =>{
     await connectDB()
