@@ -12,21 +12,23 @@ app.use(express.json())
 app.use("/api/v1", UserRoute)
 app.use("/api/v1/transactions", TransactionRoute)
 
-if (require.main === module) {
-    mongoose.connect(process.env.DB_URI)
-    .then(()=>{
+let isConnected = false;
+const connectDB = async () => {
+    if (isConnected) {
+        return;
+    }
+    try {
+        await mongoose.connect(process.env.DB_URI);
+        isConnected = true;
         console.log("DB connected successfully");
-    })
-    .catch((err)=>{
+    } catch (err) {
         console.log(err, "cannot connect to DB");
-    })
-}
-
-
-
-
+    }
+};
 
 if (require.main === module) {
+    connectDB();
+}if (require.main === module) {
     let PORT = process.env.PORT
 
 app.listen(PORT, (err) =>{
