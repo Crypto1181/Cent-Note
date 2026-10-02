@@ -12,14 +12,15 @@ app.use(express.json())
 app.use("/api/v1", UserRoute)
 app.use("/api/v1/transactions", TransactionRoute)
 
-mongoose.connect(process.env.DB_URI)
-.then(()=>{
-     console.log("DB connected successfully");
-})
-.catch((err)=>{
-     console.log(err, "cannot connect to DB");
-})
-
+if (require.main === module) {
+    mongoose.connect(process.env.DB_URI)
+    .then(()=>{
+        console.log("DB connected successfully");
+    })
+    .catch((err)=>{
+        console.log(err, "cannot connect to DB");
+    })
+}
 
 
 
